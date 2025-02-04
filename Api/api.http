@@ -1,0 +1,42 @@
+POST http://localhost:3333/peoples
+Content-Type: application/json
+
+{
+    "name": "Dykson Victor",
+    "email": "dykson.marques@gmail.com",
+    "birthDate": "1996-06-06",
+    "cpf": "47930854825",
+    "phone": "12345678901",
+    "address": "Rua 1",
+    "city": "Cidade 1",
+    "state": "Estado 1"
+}
+
+###
+
+GET  http://localhost:3333/peoples
+Content-Type: application/json
+
+###
+
+GET  http://localhost:3333/peoples/357c576d-9bd4-4cb6-82ff-a46fb43de7e4
+Content-Type: application/json
+
+###
+
+PUT  http://localhost:3333/peoples/357c576d-9bd4-4cb6-82ff-a46fb43de7e4
+Content-Type: application/json
+
+{
+    "name": "Dykson Victor",
+    "email": "dykson.tech@gmail.com",
+    "birthDate": "1996-06-06",
+    "phone": "12345678901",
+    "address": "Rua 1",
+    "city": "Cidade 1",
+    "state": "Estado 1"
+}
+
+###
+
+DELETE   http://localhost:3333/peoples/357c576d-9bd4-4cb6-82ff-a46fb43de7e4
