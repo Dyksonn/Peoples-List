@@ -3,9 +3,9 @@ Content-Type: application/json
 
 {
     "name": "Dykson Victor",
-    "email": "dykson.marques@gmail.com",
+    "email": "dykson.marques3@gmail.com",
     "birthDate": "1996-06-06",
-    "cpf": "47930854825",
+    "cpf": "47930854833",
     "phone": "12345678901",
     "address": "Rua 1",
     "city": "Cidade 1",
@@ -19,12 +19,12 @@ Content-Type: application/json
 
 ###
 
-GET  http://localhost:3333/peoples/265d9c88-eb30-4289-881b-7606b8408083
+GET  http://localhost:3333/peoples/946b8133-e8c9-4f60-8a38-cd2405139813
 Content-Type: application/json
 
 ###
 
-PUT  http://localhost:3333/peoples/9874c065-613a-43d1-8017-9bc12345005e
+PUT  http://localhost:3333/peoples/946b8133-e8c9-4f60-8a38-cd2405139810
 Content-Type: application/json
 
 {
@@ -39,4 +39,4 @@ Content-Type: application/json
 
 ###
 
-DELETE   http://localhost:3333/peoples/a8f91ea9-e650-4cc3-a9a9-f3f29f8632f4
+DELETE   http://localhost:3333/peoples/946b8133-e8c9-4f60-8a38-cd2405139810

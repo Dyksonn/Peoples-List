@@ -1,10 +1,10 @@
 import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
-import { prisma } from "../lib/prisma";
-import { format } from 'date-fns';
+import { PeopleUseCase } from "../useCases/people-usecases";
 
 export async function putPeoples(app: FastifyInstance) {
+    const peopleUseCase = new PeopleUseCase();
     app
         .withTypeProvider<ZodTypeProvider>()
         .put("/peoples/:id", {
@@ -38,40 +38,10 @@ export async function putPeoples(app: FastifyInstance) {
             }
         }, async (request, reply) => {
             const { id } = request.params;
-            const {
-                name,
-                email,
-                birthDate,
-                phone,
-                address,
-                city,
-                state
-            } = request.body;
+            const data = request.body;
 
-            const peopleEmailExists = await prisma.people.findUnique({
-                where: { email }
-            })
-
-            if (peopleEmailExists && peopleEmailExists.id !== id) {
-                throw new Error("Email already exists");
-            }
-
-            const updatedPeople = await prisma.people.update({
-                where: { id },
-                data: {
-                    name,
-                    email,
-                    birthDate: new Date(birthDate),
-                    phone,
-                    address,
-                    city,
-                    state
-                }
-            });
-
-            reply.status(200).send({ people: {
-                ...updatedPeople,
-                birthDate: format(new Date(birthDate), 'yyyy-MM-dd')
-            } });
+            const updatedPeople = await peopleUseCase.putPeople(id, data);
+            
+            reply.status(200).send({ people: updatedPeople });
         })
 }

@@ -1,10 +1,11 @@
 import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
-import { prisma } from "../lib/prisma";
 import { createPeopleValidation } from "../validations/create";
+import { PeopleUseCase } from "../useCases/people-usecases";
 
 export async function createPeoples(app: FastifyInstance) {
+    const peopleUseCase = new PeopleUseCase();
     app
         .withTypeProvider<ZodTypeProvider>()
         .post("/peoples", {
@@ -21,40 +22,12 @@ export async function createPeoples(app: FastifyInstance) {
             }
         }, async (request, reply) => {
             try {
-                const {
-                    name,
-                    email,
-                    cpf,
-                    birthDate,
-                    phone,
-                    address,
-                    city,
-                } = request.body;
+                const data = request.body;
+
     
-                const peopleExists = await prisma.people.findFirst({
-                    where: {
-                        OR: [
-                            { cpf },
-                            { email }
-                        ]
-                    }
-                })
-    
-                if (peopleExists !== null) {
-                    throw new Error("People already exists", { cause: { statusCode: 409 } });
-                }
-    
-                const people = await prisma.people.create({
-                    data: {
-                        name,
-                        email,
-                        cpf,
-                        birthDate: new Date(birthDate),
-                        phone,
-                        address,
-                        city,
-                        state: request.body.state,
-                    }
+                const people = await peopleUseCase.create({
+                    ...data,
+                    birthDate: new Date(data.birthDate),
                 })
     
                 return { peopleId: people.id };

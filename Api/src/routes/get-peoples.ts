@@ -3,8 +3,10 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
 import { prisma } from "../lib/prisma";
 import { format } from 'date-fns';
+import { PeopleUseCase } from "../useCases/people-usecases";
 
 export async function getPeoples(app: FastifyInstance) {
+    const peopleUseCase = new PeopleUseCase();
     app
         .withTypeProvider<ZodTypeProvider>()
         .get("/peoples", {
@@ -26,14 +28,9 @@ export async function getPeoples(app: FastifyInstance) {
                 }
             }
         }, async (request, reply) => {
-            const peoples = await prisma.people.findMany();
+            const peoples = await peopleUseCase.list();
 
-            const transformedPeoples = peoples.map(person => ({
-                ...person,
-                birthDate: format(new Date(person.birthDate), 'yyyy-MM-dd'), 
-            }));
-
-            reply.send({ peoples: transformedPeoples });
+            reply.send({ peoples: peoples });
         })
 
     app
@@ -60,24 +57,19 @@ export async function getPeoples(app: FastifyInstance) {
                 }
             }
         }, async (request, reply) => {
-            const { id } = request.params;
+            try {
+                const { id } = request.params;
 
-            const people = await prisma.people.findUnique({
-                where: {
-                    id
+                const people = await peopleUseCase.findById(id);
+
+                reply.send({
+                    people,
+                });
+            } catch (error: any) {
+                if (error.message === "People not found") {
+                    reply.status(404);
+                    throw new Error("People not found");
                 }
-            });
-
-            if (!people) {
-                reply.status(404);
-                throw new Error("People not found");
             }
-
-            reply.send({
-                people: {
-                    ...people,
-                    birthDate: format(new Date(people.birthDate), 'yyyy-MM-dd'),
-                }
-            });
         })
 }
