@@ -1,8 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
-import { prisma } from "../lib/prisma";
-import { format } from 'date-fns';
 import { PeopleUseCase } from "../useCases/people-usecases";
 
 export async function getPeoples(app: FastifyInstance) {
