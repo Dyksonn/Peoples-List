@@ -1,4 +1,5 @@
 import fastify from "fastify";
+import fastifyCors from '@fastify/cors'
 import { serializerCompiler, validatorCompiler } from "fastify-type-provider-zod";
 import { createPeoples } from "./routes/create-peoples";
 import { getPeoples } from "./routes/get-peoples";
@@ -6,6 +7,11 @@ import { putPeoples } from "./routes/put-peoples";
 import { deletePeoples } from "./routes/delete-people";
 
 const app = fastify();
+
+app.register(fastifyCors, {
+    origin: '*',
+    credentials: true,
+});
 
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);

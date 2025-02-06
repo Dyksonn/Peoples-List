@@ -19,16 +19,16 @@ Content-Type: application/json
 
 ###
 
-GET  http://localhost:3333/peoples/357c576d-9bd4-4cb6-82ff-a46fb43de7e4
+GET  http://localhost:3333/peoples/265d9c88-eb30-4289-881b-7606b8408083
 Content-Type: application/json
 
 ###
 
-PUT  http://localhost:3333/peoples/357c576d-9bd4-4cb6-82ff-a46fb43de7e4
+PUT  http://localhost:3333/peoples/9874c065-613a-43d1-8017-9bc12345005e
 Content-Type: application/json
 
 {
-    "name": "Dykson Victor",
+    "name": "Dykson VictoR 2",
     "email": "dykson.tech@gmail.com",
     "birthDate": "1996-06-06",
     "phone": "12345678901",
@@ -39,4 +39,4 @@ Content-Type: application/json
 
 ###
 
-DELETE   http://localhost:3333/peoples/357c576d-9bd4-4cb6-82ff-a46fb43de7e4
+DELETE   http://localhost:3333/peoples/a8f91ea9-e650-4cc3-a9a9-f3f29f8632f4
